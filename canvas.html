@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+
+    <!-- Canvas Element for Animation -->
+    <canvas id="animationCanvas" width="500px" height="500px" style="border: 1px solid black; animation-duration: 2s; transition: all; transition-duration: 0.1s;"></canvas>
+
+
+    <script>
+        // Canvas animation
+        const animationCanvas = document.getElementById('animationCanvas');
+        const ctx = animationCanvas.getContext('2d');
+
+        // Initial position of a moving object
+        let x = 50;
+        let y = 50;
+        let w = 50;
+        let h = 50;
+
+        let xv = 2;
+        let yv = 4;
+        let wv = 1;
+
+        function animate() {
+            // Clear the canvas
+            ctx.clearRect(0, 0, animationCanvas.width, animationCanvas.height);
+
+            // Draw a moving object on the canvas
+            ctx.fillStyle = 'red';
+            ctx.fillRect(x, y, w, w);
+
+            // Update the position for the next frame
+            x += xv;
+            y += yv;
+            w += wv;
+
+            if(w > 100) {
+                wv = -1;
+            }
+            if (w <= 0) {
+                wv = 1;
+            }
+
+            // Reset the position if it goes out of bounds
+            if (x > animationCanvas.width - w) {
+                xv = -2;
+                animationCanvas.style.borderRight = "10px solid red"
+                setTimeout(() => {
+                    animationCanvas.style.border = "1px solid black"
+                },100);
+            }
+            if (y > animationCanvas.height - w) {
+                yv = -4;
+                animationCanvas.style.borderBottom = "10px solid red"
+                setTimeout(() => {
+                    animationCanvas.style.border = "1px solid black"
+                },100);
+            }
+            if (x < 0) {
+                xv = 2;
+                animationCanvas.style.borderLeft = "10px solid red"
+                setTimeout(() => {
+                    animationCanvas.style.border = "1px solid black"
+                },100);
+            }
+            if (y < 0) {
+                yv = 4;
+                animationCanvas.style.borderTop = "10px solid red"
+                setTimeout(() => {
+                    animationCanvas.style.border = "1px solid black"
+                },100);
+            }
+
+            // Request the next animation frame
+            requestAnimationFrame(animate);
+        }
+
+        // Start the animation loop
+        animate();
+    </script>
+</body>
+</html>
